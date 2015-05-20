@@ -50,8 +50,20 @@
 			y2: 0,
 		};
 
+		var acc = {}
+
 		var lastTS = 0;
 		var NORM_INT = 50;
+
+		function handleOrientation(event) {
+			acc.absolute = event.absolute || 0;
+			acc.alpha    = event.alpha || 0;
+			acc.beta     = event.beta || 0;
+			acc.gamma    = event.gamma || 0;
+		};
+
+		window.addEventListener("deviceorientation", handleOrientation, true);
+		handleOrientation({});
 
 		canvas.addEventListener('mousedown', function (e) {
 			mouse.d = true
@@ -148,6 +160,8 @@
 			ctx.lineTo(mouse.x2, mouse.y2);
 			ctx.stroke();
 			ctx.closePath();
+
+			ctx.fillText('acc:' + [acc.alpha, acc.beta, acc.gamma]. join(' ,'), 20, 20)
 
 
 				for (i = 0; i < ball.length; i++) {
