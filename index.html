@@ -118,7 +118,7 @@
 		}
 
 		function _tick (i, timeMuliplier) {
-			ball[i].vy += gravity * timeMuliplier;
+			ball[i].vy += (gravity * timeMuliplier) * (Math.cos(toRad(acc.gamma)) * Math.sign(acc.gamma));
 			ball[i].x += ball[i].vx;
 			ball[i].y += ball[i].vy;
 
@@ -255,6 +255,10 @@
 		      fn.apply(context, args);
 		    }
 		  };
+		}
+
+		function toRad(deg) {
+			return (deg * Math.PI) / 180;
 		}
 	</script>
 </body>
