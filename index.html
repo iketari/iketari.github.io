@@ -11,6 +11,10 @@
 			height: 100%;
 		}
 
+		html {
+			touch-action: none;
+		}
+
 		body {
 			display: flex;
 			align-items: center;
@@ -19,6 +23,7 @@
 		canvas {
 			cursor: crosshair;
 			border: 2px solid black;
+			touch-action: chained;
 		}
 	</style>
 </head>
@@ -32,10 +37,10 @@
 		var h = 0;
 		var padding = 15;
 
-		var ball = []
+		var ball = [];
 
-		var gravity = 0.3
-		var force = 0.2
+		var gravity = 0.3;
+		var force = 0.2;
 
 		var mouse = {
 			d: false,
@@ -43,7 +48,10 @@
 			y1: 0,
 			x2: 0,
 			y2: 0,
-		}
+		};
+
+		var lastTS = 0;
+		var NORM_INT = 50;
 
 		window.onmousedown = function (e) {
 			mouse.d = true
@@ -66,15 +74,25 @@
 				var dx = (mouse.x1 - mouse.x2);
 				var dy = (mouse.y1 - mouse.y2);
 				var mag = Math.sqrt(dx * dx + dy * dy);
+				var r = Math.floor(mag / 5);
 
 				ball.push({
 					x: mouse.x1,
 					y: mouse.y1,
-					r: Math.floor(Math.random() * 20) + 10,
+					r: r > Math.min(w,h) / 4 || r < 20 ? 20 : r,
 					vx: dx / mag * -(mag * force),
 					vy: dy / mag * -(mag * force),
 					b: 0.7,
-				})
+					color: '#'+Math.floor(Math.random()*16777215).toString(16)
+				});
+
+				mouse = {
+					d: false,
+					x1: 0,
+					y1: 0,
+					x2: 0,
+					y2: 0,
+				};
 			}
 		}
 		document.onselectstart = function () {
@@ -83,9 +101,6 @@
 		document.oncontextmenu = function () {
 			return false
 		}
-
-		var lastTS = 0;
-		var NORM_INT = 50;
 
 		function update() {
 			var ts = Date.now();
@@ -155,9 +170,10 @@
 				}
 
 
+
 				ctx.beginPath()
 				ctx.arc(ball[i].x, ball[i].y, ball[i].r, 0, Math.PI * 2, false)
-				ctx.fillStyle = "black"
+				ctx.fillStyle = ball[i].color;
 				ctx.fill()
 				ctx.closePath()
 			}
