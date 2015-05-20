@@ -118,7 +118,9 @@
 		}
 
 		function _tick (i, timeMuliplier) {
-			ball[i].vy += (gravity * timeMuliplier) * (Math.cos(toRad(acc.gamma)) * sign(acc.gamma));
+			ball[i].vy += (gravity * timeMuliplier * (Math.cos(toRad(acc.gamma)) * -1 * sign(acc.gamma)));
+			ball[i].vx += (gravity * timeMuliplier * (Math.cos(toRad(acc.beta)) * sign(acc.beta)));
+			// (Math.cos(toRad(acc.gamma)) * sign(acc.gamma))
 			ball[i].x += ball[i].vx;
 			ball[i].y += ball[i].vy;
 
@@ -161,8 +163,10 @@
 			ctx.stroke();
 			ctx.closePath();
 
-			ctx.fillText('acc:' + [acc.alpha, acc.beta, acc.gamma]. join(' ,'), 20, 20)
-
+			if (~location.hash.indexOf('debug')) {
+				ctx.fillText('acc:' + [acc.alpha, acc.beta, acc.gamma]. join(' ,'), 20, 20)
+				ctx.fillText('' + (Math.cos(toRad(acc.gamma)) * sign(acc.gamma)), 20, 40)
+			}
 
 				for (i = 0; i < ball.length; i++) {
 
