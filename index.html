@@ -53,12 +53,13 @@
 		var lastTS = 0;
 		var NORM_INT = 50;
 
-		window.onmousedown = function (e) {
+		canvas.addEventListener('mousedown', function (e) {
 			mouse.d = true
 			mouse.x1 = mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
 			mouse.y1 = mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
-		}
-		window.onmousemove = function (e) {
+		});
+
+		canvas.addEventListener('mousemove', function (e) {
 			if (mouse.d) {
 				mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
 				mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
@@ -66,8 +67,9 @@
 				mouse.x1 = mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
 				mouse.y1 = mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
 			}
-		}
-		window.onmouseup = function () {
+		});
+
+		canvas.addEventListener('mouseup', function () {
 			if (mouse.d) {
 				mouse.d = false
 
@@ -94,12 +96,42 @@
 					y2: 0,
 				};
 			}
-		}
+		});
+
 		document.onselectstart = function () {
 			return false
 		}
 		document.oncontextmenu = function () {
 			return false
+		}
+
+		function _tick (i, timeMuliplier) {
+			ball[i].vy += gravity * timeMuliplier;
+			ball[i].x += ball[i].vx;
+			ball[i].y += ball[i].vy;
+
+			if (ball[i].x > w - ball[i].r) {
+				ball[i].x = w - ball[i].r
+				ball[i].vx *= -ball[i].b
+			}
+			if (ball[i].x < ball[i].r) {
+				ball[i].x = ball[i].r
+				ball[i].vx *= -ball[i].b
+			}
+			if (ball[i].y > h - ball[i].r) {
+				ball[i].y = h - ball[i].r
+				ball[i].vy *= -ball[i].b
+			}
+			if (ball[i].y < ball[i].r) {
+				ball[i].y = ball[i].r
+				ball[i].vy *= -ball[i].b
+			}
+		}
+
+		function _dist (i, j) {
+			var dx = ball[i].x - ball[j].x;
+			var dy = ball[i].y - ball[j].y;
+			return Math.sqrt(dx * dx + dy * dy);
 		}
 
 		function update() {
@@ -117,32 +149,15 @@
 			ctx.stroke();
 			ctx.closePath();
 
-			for (i = 0; i < ball.length; i++) {
-				ball[i].vy += gravity * timeMuliplier;
-				ball[i].x += ball[i].vx;
-				ball[i].y += ball[i].vy;
 
-				if (ball[i].x > w - ball[i].r) {
-					ball[i].x = w - ball[i].r
-					ball[i].vx *= -ball[i].b
-				}
-				if (ball[i].x < ball[i].r) {
-					ball[i].x = ball[i].r
-					ball[i].vx *= -ball[i].b
-				}
-				if (ball[i].y > h - ball[i].r) {
-					ball[i].y = h - ball[i].r
-					ball[i].vy *= -ball[i].b
-				}
-				if (ball[i].y < ball[i].r) {
-					ball[i].y = ball[i].r
-					ball[i].vy *= -ball[i].b
-				}
+				for (i = 0; i < ball.length; i++) {
+
+				_tick(i, timeMuliplier);
 
 				for (j = i + 1; j < ball.length; j++) {
 					var dx = ball[i].x - ball[j].x
 					var dy = ball[i].y - ball[j].y
-					var dist = Math.sqrt(dx * dx + dy * dy)
+					var dist = _dist(i, j);
 					if (Math.abs(dx) + Math.abs(dy) != 0 && dist <= ball[i].r + ball[j].r) {
 						var angle = Math.atan2(dy, dx)
 
@@ -166,6 +181,14 @@
 						ball[i].vy = Math.sin(angle) * fvx1 + Math.sin(angle + Math.PI / 2) * fvy1;
 						ball[j].vx = Math.cos(angle) * fvx2 + Math.cos(angle + Math.PI / 2) * fvy2;
 						ball[j].vy = Math.sin(angle) * fvx2 + Math.sin(angle + Math.PI / 2) * fvy2;
+
+						// var attempt = 0;
+						// while (_dist(i, j) < ball[i].r + ball[j].r || attempt > 1000) {
+						// 	_tick(i, 1);
+						// 	_tick(j, 1);
+						// 	attempt += 1;
+						// }
+
 					}
 				}
 
