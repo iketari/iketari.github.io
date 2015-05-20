@@ -2,22 +2,181 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Canvas - Line</title>
+<title>Canvas - Balls</title>
 	<style type="text/css">
 		html, body {
 			margin: 0;
 			padding: 0;
 			overflow: hidden;
+			height: 100%;
 		}
-/*		canvas {
-			border: 1px solid gold;
-		}*/
+
+		body {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		canvas {
+			cursor: crosshair;
+			border: 2px solid black;
+		}
 	</style>
 </head>
 <body>
-	<canvas></canvas>
+	<canvas id="canvas" width="0" height="0"></canvas>
 	<script>
-var _0xc2e3=["\x69\x6E\x6E\x65\x72","\x69\x6E\x6E\x65\x72\x57\x69\x64\x74\x68","\x63\x6C\x69\x65\x6E\x74","\x64\x6F\x63\x75\x6D\x65\x6E\x74\x45\x6C\x65\x6D\x65\x6E\x74","\x62\x6F\x64\x79","\x57\x69\x64\x74\x68","\x48\x65\x69\x67\x68\x74","\x72\x65\x71\x75\x65\x73\x74\x41\x6E\x69\x6D\x61\x74\x69\x6F\x6E\x46\x72\x61\x6D\x65","\x77\x65\x62\x6B\x69\x74\x52\x65\x71\x75\x65\x73\x74\x41\x6E\x69\x6D\x61\x74\x69\x6F\x6E\x46\x72\x61\x6D\x65","\x6D\x6F\x7A\x52\x65\x71\x75\x65\x73\x74\x41\x6E\x69\x6D\x61\x74\x69\x6F\x6E\x46\x72\x61\x6D\x65","\x6D\x73\x52\x65\x71\x75\x65\x73\x74\x41\x6E\x69\x6D\x61\x74\x69\x6F\x6E\x46\x72\x61\x6D\x65","\x6F\x52\x65\x71\x75\x65\x73\x74\x41\x6E\x69\x6D\x61\x74\x69\x6F\x6E\x46\x72\x61\x6D\x65","\x73\x65\x74\x54\x69\x6D\x65\x6F\x75\x74","\x63\x61\x6E\x76\x61\x73","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x32\x64","\x67\x65\x74\x43\x6F\x6E\x74\x65\x78\x74","\x77\x69\x64\x74\x68","\x68\x65\x69\x67\x68\x74","\x72\x61\x6E\x64\x6F\x6D","\x72\x61\x64\x69\x75\x73","\x78","\x79","\x64\x72\x61\x77","\x66\x69\x6C\x6C\x53\x74\x79\x6C\x65","\x62\x6C\x61\x63\x6B","\x62\x65\x67\x69\x6E\x50\x61\x74\x68","\x50\x49","\x61\x72\x63","\x63\x6C\x6F\x73\x65\x50\x61\x74\x68","\x66\x69\x6C\x6C","\x63\x6C\x65\x61\x72\x52\x65\x63\x74","\x6C\x6F\x61\x64","\x72\x65\x6D\x6F\x76\x65\x45\x76\x65\x6E\x74\x4C\x69\x73\x74\x65\x6E\x65\x72","\x63\x6C\x69\x63\x6B","\x61\x64\x64\x45\x76\x65\x6E\x74\x4C\x69\x73\x74\x65\x6E\x65\x72"];function action(){function _0x6b5cx2(){var _0x6b5cx3=window;var _0x6b5cx4=_0xc2e3[0];if(!(_0xc2e3[1] in window)){_0x6b5cx4=_0xc2e3[2];_0x6b5cx3=document[_0xc2e3[3]]||document[_0xc2e3[4]];};return {width:_0x6b5cx3[_0x6b5cx4+_0xc2e3[5]],height:_0x6b5cx3[_0x6b5cx4+_0xc2e3[6]]};}window[_0xc2e3[7]]=function(){return window[_0xc2e3[7]]||window[_0xc2e3[8]]||window[_0xc2e3[9]]||window[_0xc2e3[10]]||window[_0xc2e3[11]]||function(_0x6b5cx5){window[_0xc2e3[12]](_0x6b5cx5,1e3/60)}}();var _0x6b5cx6=document[_0xc2e3[14]](_0xc2e3[13]);var _0x6b5cx7=_0x6b5cx6[_0xc2e3[16]](_0xc2e3[15]);var _0x6b5cx8=_0x6b5cx6[_0xc2e3[17]]=_0x6b5cx2()[_0xc2e3[17]];var _0x6b5cx9=_0x6b5cx6[_0xc2e3[18]]=_0x6b5cx2()[_0xc2e3[18]];var _0x6b5cxa=0;var _0x6b5cxb=(Math[_0xc2e3[19]]()* -15)-5;var _0x6b5cxc=0.5;var _0x6b5cxd=0.8;function _0x6b5cxe(){this[_0xc2e3[20]]=50;this[_0xc2e3[21]]=_0x6b5cx6[_0xc2e3[17]]/2;this[_0xc2e3[22]]=_0x6b5cx6[_0xc2e3[18]]-this[_0xc2e3[20]];this[_0xc2e3[23]]=function(_0x6b5cx7){_0x6b5cx7[_0xc2e3[24]]=_0xc2e3[25];_0x6b5cx7[_0xc2e3[26]]();_0x6b5cx7[_0xc2e3[28]](this[_0xc2e3[21]],this[_0xc2e3[22]],this[_0xc2e3[20]],0,Math[_0xc2e3[27]]*2,false);_0x6b5cx7[_0xc2e3[29]]();_0x6b5cx7[_0xc2e3[30]]();};}var _0x6b5cxf= new _0x6b5cxe();(function _0x6b5cx10(){requestAnimationFrame(_0x6b5cx10);_0x6b5cx7[_0xc2e3[31]](0,0,_0x6b5cx8,_0x6b5cx9);_0x6b5cxb+=_0x6b5cxc;_0x6b5cxf[_0xc2e3[21]]+=_0x6b5cxa;_0x6b5cxf[_0xc2e3[22]]+=_0x6b5cxb;if(_0x6b5cxf[_0xc2e3[21]]+_0x6b5cxf[_0xc2e3[20]]>_0x6b5cx6[_0xc2e3[17]]||_0x6b5cxf[_0xc2e3[21]]-_0x6b5cxf[_0xc2e3[20]]<0||_0x6b5cxf[_0xc2e3[22]]+_0x6b5cxf[_0xc2e3[20]]>_0x6b5cx6[_0xc2e3[18]]){_0x6b5cxf[_0xc2e3[21]]=_0x6b5cx6[_0xc2e3[17]]/2;_0x6b5cxf[_0xc2e3[22]]=_0x6b5cx6[_0xc2e3[18]]-_0x6b5cxf[_0xc2e3[20]];_0x6b5cxa=0;_0x6b5cxb*= -_0x6b5cxd;};_0x6b5cxf[_0xc2e3[23]](_0x6b5cx7);}());}window[_0xc2e3[35]](_0xc2e3[32],function load(_0x6b5cx12){action();window[_0xc2e3[33]](_0xc2e3[32],load,false);document[_0xc2e3[4]][_0xc2e3[35]](_0xc2e3[34],function(){action()});},false);
+		var canvas = document.getElementById("canvas")
+		var ctx = canvas.getContext("2d")
+
+		var w = 0;
+		var h = 0;
+		var padding = 15;
+
+		var ball = []
+
+		var gravity = 0.3
+		var force = 0.2
+
+		var mouse = {
+			d: false,
+			x1: 0,
+			y1: 0,
+			x2: 0,
+			y2: 0,
+		}
+
+		window.onmousedown = function (e) {
+			mouse.d = true
+			mouse.x1 = mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
+			mouse.y1 = mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
+		}
+		window.onmousemove = function (e) {
+			if (mouse.d) {
+				mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
+				mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
+			} else {
+				mouse.x1 = mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
+				mouse.y1 = mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
+			}
+		}
+		window.onmouseup = function () {
+			if (mouse.d) {
+				mouse.d = false
+
+				var dx = (mouse.x1 - mouse.x2);
+				var dy = (mouse.y1 - mouse.y2);
+				var mag = Math.sqrt(dx * dx + dy * dy);
+
+				ball.push({
+					x: mouse.x1,
+					y: mouse.y1,
+					r: Math.floor(Math.random() * 20) + 10,
+					vx: dx / mag * -(mag * force),
+					vy: dy / mag * -(mag * force),
+					b: 0.7,
+				})
+			}
+		}
+		document.onselectstart = function () {
+			return false
+		}
+		document.oncontextmenu = function () {
+			return false
+		}
+
+		var lastTS = 0;
+		var NORM_INT = 50;
+
+		function update() {
+			var ts = Date.now();
+			var interval = ts - lastTS;
+
+			var timeMuliplier = interval / NORM_INT;
+			lastTS = ts;
+
+			ctx.clearRect(0, 0, w, h);
+
+			ctx.beginPath();
+			ctx.moveTo(mouse.x1, mouse.y1);
+			ctx.lineTo(mouse.x2, mouse.y2);
+			ctx.stroke();
+			ctx.closePath();
+
+			for (i = 0; i < ball.length; i++) {
+				ball[i].vy += gravity * timeMuliplier;
+				ball[i].x += ball[i].vx;
+				ball[i].y += ball[i].vy;
+
+				if (ball[i].x > w - ball[i].r) {
+					ball[i].x = w - ball[i].r
+					ball[i].vx *= -ball[i].b
+				}
+				if (ball[i].x < ball[i].r) {
+					ball[i].x = ball[i].r
+					ball[i].vx *= -ball[i].b
+				}
+				if (ball[i].y > h - ball[i].r) {
+					ball[i].y = h - ball[i].r
+					ball[i].vy *= -ball[i].b
+				}
+				if (ball[i].y < ball[i].r) {
+					ball[i].y = ball[i].r
+					ball[i].vy *= -ball[i].b
+				}
+
+				for (j = i + 1; j < ball.length; j++) {
+					var dx = ball[i].x - ball[j].x
+					var dy = ball[i].y - ball[j].y
+					var dist = Math.sqrt(dx * dx + dy * dy)
+					if (Math.abs(dx) + Math.abs(dy) != 0 && dist <= ball[i].r + ball[j].r) {
+						var angle = Math.atan2(dy, dx)
+
+						var sp1 = Math.sqrt(ball[i].vx * ball[i].vx + ball[i].vy * ball[i].vy);
+						var sp2 = Math.sqrt(ball[j].vx * ball[j].vx + ball[j].vy * ball[j].vy);
+
+						var dir1 = Math.atan2(ball[i].vy, ball[i].vx);
+						var dir2 = Math.atan2(ball[j].vy, ball[j].vx);
+
+						var vx1 = sp1 * Math.cos(dir1 - angle);
+						var vy1 = sp1 * Math.sin(dir1 - angle);
+						var vx2 = sp2 * Math.cos(dir2 - angle);
+						var vy2 = sp2 * Math.sin(dir2 - angle);
+
+						var fvx1 = ((ball[i].r - ball[j].r) * vx1 + (2 * ball[j].r) * vx2) / (ball[i].r + ball[j].r);
+						var fvx2 = ((2 * ball[i].r) * vx1 + (ball[j].r - ball[i].r) * vx2) / (ball[i].r + ball[j].r);
+						var fvy1 = vy1;
+						var fvy2 = vy2;
+
+						ball[i].vx = Math.cos(angle) * fvx1 + Math.cos(angle + Math.PI / 2) * fvy1;
+						ball[i].vy = Math.sin(angle) * fvx1 + Math.sin(angle + Math.PI / 2) * fvy1;
+						ball[j].vx = Math.cos(angle) * fvx2 + Math.cos(angle + Math.PI / 2) * fvy2;
+						ball[j].vy = Math.sin(angle) * fvx2 + Math.sin(angle + Math.PI / 2) * fvy2;
+					}
+				}
+
+
+				ctx.beginPath()
+				ctx.arc(ball[i].x, ball[i].y, ball[i].r, 0, Math.PI * 2, false)
+				ctx.fillStyle = "black"
+				ctx.fill()
+				ctx.closePath()
+			}
+
+			requestAnimationFrame(update);
+		}
+
+		function init () {
+			w = canvas.width = window.innerWidth - padding;
+			h = canvas.height = window.innerHeight - padding;
+
+			ball = [];
+
+			var lastTS = Date.now();
+			requestAnimationFrame(update);
+			// setInterval(update, 1000 / 60)
+		}
+
+		init();
 	</script>
 </body>
 </html>
