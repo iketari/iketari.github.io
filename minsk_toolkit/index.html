@@ -66,9 +66,9 @@
 				<section>
 					<h3>Задачи, которым никто не удивится</h3>
 					<ol>
-						<li class="fragment">Сокращение времени разработки</li>
-						<li class="fragment">Структурирование и упрощение кода</li>
-						<li class="fragment">Уменьшение порога вхождения в проект</li>
+						<li>Сокращение времени разработки</li>
+						<li>Структурирование и упрощение кода</li>
+						<li>Уменьшение порога вхождения в проект</li>
 					</ol>
 				</section>
 
@@ -76,12 +76,22 @@
 					<section>
 						<h3>Задачи, характерные для больших компаний</h3>
 						<ol>
-							<li class="fragment">Унификация дизайна продуктов компании</li>
-							<li class="fragment">Синхронизация работы нескольких команд</li>
-							<li class="fragment">Многократное реиспользование кода</li>
+							<li>Унификация дизайна продуктов компании</li>
+							<li>Синхронизация работы нескольких команд</li>
+							<li>Многократное реиспользование кода</li>
 						</ol>
 					</section>
+				</section>
 
+
+				<section>
+					<section>
+						<p>
+							<strong>Проблема: разработка интерфейса ведется независимыми командами, котырые зачастую работают над схожими задачами.</strong>
+							<br><br>
+							<q>Только в Почте сущетсвует 4 группы, которые выполняют задачи нескольких продуктовых менеджеров.</q>
+						</p>
+					</section>
 					<section data-background="/img/mail.png" data-background-size="100%">
 						<h2>Почта</h2>
 					</section>
@@ -91,26 +101,31 @@
 					</section>
 				</section>
 
-
-				<section>
-					<p>
-						<strong>Проблема: разработка интерфейса ведется независимыми командами, котырые зачастую пишут одинаковый код.</strong>
-						<br><br>
-						<q>Только в Почте сущетсвует 4 группы, которые выполняют задачи нескольких продуктовых менеджеров.</q>
-					</p>
-				</section>
-
 				<section>
 					Задача: научиться разрабатывать интерфейс с единой кодовой базой.
 				</section>
 
 				<section>
-					<h3>Варианты решения</h3>
-					<ol>
-						<li class="fragment">Отдельная библиотека UI компонент и команда разработчиков</li>
-						<li class="fragment">Объединить команды. Одинаковые макеты для всех. Гайдлайны.</li>
-						<li class="fragment">...</li>
-					</ol>
+					<section>
+						<h3>Варианты решения</h3>
+						<ol>
+							<li class="fragment">
+								<span>Отдельная библиотека UI компонент и команда разработчиков</span>
+								<br>
+								<q class="fragment">Поставьте таск! Я занят!</q>
+							</li>
+							<li class="fragment">
+								<span>Одинаковый дизайн. Графические гайдлайны.</span>
+								<br>
+							</li>
+						</ol>
+					</section>
+					<section>
+						<q>TODO: Картинки</q>
+						<h2>b-thumb</h2>
+						<q>vs</q>
+						<h2>b-thumb2</h2>
+					</section>
 				</section>
 
 				<section>
@@ -118,6 +133,27 @@
 					<h4>Отдельная библиотека, которую разрабатывают все команды, в процессе работы над своими задачами</h4>
 				</section>
 
+				<section>
+					<section>
+						<h3>Что нужно, чтобы такую библиотеку было удобно использовать?</h3>
+					</section>
+
+					<section>
+						<h3>Просто...</h3>
+						<ol>
+							<li class="">... подключить к новому проекту</li>
+							<li class="fragment">... разрабатывать</li>
+							<li class="fragment">... <i>отдать</i> в тестирование</li>
+							<li class="fragment">... протестировать <i>самим</i></li>
+							<li class="fragment">... вписать в <span style="color:blue">штатный</span> релиз-цикл</li>
+							<li class="fragment">... вписать в <span style="color:red">экстренный</span> релиз-цикл</li>
+							<li class="fragment">... включиться в работу</li>
+						</ol>
+					</section>
+				</section>
+
+
+<!--
 				<section>
 					<section>
 						<h3>Принципы устройства <i>Toolkit</i> </h3>
@@ -156,34 +192,126 @@
 						<img  src="/img/product.png" style="max-height:9em" alt="Product">
 					</section>
 				</section>
-
+-->
 				<section>
 					<section>
-						<h3>Распределенная разработка</h3>
+						<h3>Как сложно подключить библиотеку к проекту?</h3>
 					</section>
 					<section>
 						<h3>git submodule</h3>
 						<ol>
 							<li>Очень сложно контролировать текущую версию</li>
-							<li>Релиз цикл?</li>
+							<li>А как мержить?</li>
 							<li>Нельзя построить дерево зависимостей</li>
 						</ol>
 					</section>
 					<section>
 						<h3>git subtree</h3>
-						<img src="/img/subtree.png" style="max-height:12em" alt="git subtree">
-					</section>
-					<section>
-						<h3>Пакеты</h3>
+						<!-- <img src="/img/subtree.png" style="max-height:12em" alt="git subtree"> -->
 						<ol>
-							<li>Строгий котроль версий</li>
-							<li>Возможность отдельной разработки</li>
-							<li>Слабая связь с проектом</li>
-							<li>Обилие open-source пакетных менеджеров</li>
+							<li>Испорченный git log</li>
+							<li>Очень медленно</li>
+							<li>Нельзя построить дерево зависимостей</li>
 						</ol>
 					</section>
 				</section>
 
+				<section>
+					<section>
+						<h3>А как просто?</h3>
+					</section>
+
+					<section>
+						<h3>Пакеты</h3>
+						<h4 class="fragment">
+							<q>toolkit@0.15.2</q>
+						</h4>
+					</section>
+
+					<section>
+						<h3>И что?</h3>
+						<ol class="fragment">
+							<li>Удобный контроль версий</li>
+							<li>Возможность отдельной разработки</li>
+							<li>Слабая связь с проектом</li>
+							<li>Обилие пакетных менеджеров</li>
+						</ol>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Как просто разрабатывать с пакетами?</h3>
+					</section>
+					<section>
+						<h3>Нужна фича из версии 0.14.0</h3>
+						<pre class="noborder">
+						<code class="json">
+//package.json
+...
+</code>
+<code class="fragment">
+"jam": {
+	"dependencies": {
+		"toolkit": "0.14.0",
+		"callstackjs": "0.4.2",
+		"features": "0.1.0"
+	}
+}
+</code>
+<code class="json">
+...
+						</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Нужны доработки</h3>
+						<pre class="noborder">
+						<code class="bash">
+ll data/packages
+...
+5 18:27 callstackjs
+9 11:20 toolkit -> ../../../packages/toolkit/
+5 18:27 features
+...
+						</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Доработали! Что потом?</h3>
+						<h4 class="fragment">git commit</h4>
+					</section>
+
+					<section>
+						<h3>Выкатываем на тестовый стенд</h3>
+						<pre class="noborder">
+						<code class="json">
+//package.json
+...
+</code>
+<code class="fragment">
+"dependencies": {
+"toolkit": "git+ssh://git@gitmrg.ru:toolkit.git#mail-36759",
+...
+}
+</code>
+<code class="json">
+...
+						</code>
+						</pre>
+					</section>
+
+					<section>
+						<h3>Радуемся результату на тестовом стенде</h3>
+						<img src="/img/mail.png" class="noborder" alt="mail">
+					</section>
+					<section>
+						<h3>Делаем мерж реквест в основную ветку пакета</h3>
+						<img src="/img/mergerequest.png" class="noborder" alt="mail">
+					</section>
+				</section>
+
+ <!--
 				<section>
 					<section>
 						<h3>Работа с пакетами</h3>
@@ -295,6 +423,7 @@ drwxrwxr-x 16 a.mezin a.mezin  4096 Сен 29 12:14 ico
 						</pre>
 					</section>
 				</section>
+-->
 
 				<section>
 					<section>
@@ -324,7 +453,7 @@ drwxrwxr-x 16 a.mezin a.mezin  4096 Сен 29 12:14 ico
 					</section>
 				</section>
 
-
+<!--
 				<section>
 					<section>
 						<h3>Попробуем разработать блок</h3>
@@ -386,6 +515,7 @@ drwxrwxr-x 16 a.mezin a.mezin  4096 Сен 29 12:14 ico
 						<img src="/img/mergerequest.png" alt="mail">
 					</section>
 				</section>
+-->
 
 				<section>
 					<section>
@@ -395,14 +525,17 @@ drwxrwxr-x 16 a.mezin a.mezin  4096 Сен 29 12:14 ico
 					<section>
 						<h3>Наиболее простой способ</h3>
 						<h4>Изменения осуществялются в рамках библиотеки</h4>
+						<img src="/img/simple_workflow.png" class="noborder" alt="">
 					</section>
 					<section>
 						<h3>Немного усложним</h3>
 						<h4>Изменения осуществялются в рамках задачи проекта</h4>
+						<img src="/img/project_workflow.png" class="noborder" alt="">
 					</section>
 					<section>
 						<h3>Nightmare</h3>
 						<h4>Изменения осуществялются в рамках хотфикса проекта</h4>
+						<img src="/img/hotfix_workflow.png" class="noborder" alt="">
 					</section>
 				</section>
 
