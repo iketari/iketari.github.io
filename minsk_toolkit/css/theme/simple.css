@@ -275,3 +275,54 @@ body {
  *********************************************/
 .reveal .slide-number {
   color: #00008B; }
+
+/* image-list */
+.image-list {
+  margin-top: 1em;
+  width: 100%; }
+  .image-list__item {
+    font-size: 30px !important;
+    margin: 10px 20px !important;
+    width: 10em;
+    text-align: center;
+    display: inline-block; }
+  .image-list__img {
+    display: block;
+    margin: 0.5em auto !important; }
+
+/* image-list */
+/*ticked-list*/
+.ticked-list li {
+  list-style-type: none;
+  position: relative; }
+
+.ticked-list li.ticked:before {
+  content: '✓';
+  color: seagreen;
+  position: absolute;
+  left: -1em; }
+
+.ticked-list li.awaiting:before {
+  content: '•';
+  color: goldenrod;
+  position: absolute;
+  left: -1em;
+  top: 0.1em; }
+
+/*ticked-list */
+/* greetings */
+.greetings {
+  margin-top: 1em;
+  text-align: justify; }
+
+.greetings__person {
+  font-size: 30px !important;
+  margin: 10px 20px !important;
+  text-align: center;
+  display: inline-block; }
+
+.greetings__img {
+  display: block;
+  margin: 0.5em auto !important;
+  height: 5em;
+  width: 4.2em; }
