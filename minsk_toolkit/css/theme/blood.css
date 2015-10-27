@@ -318,17 +318,19 @@ body {
   margin-top: 1em;
   text-align: justify; }
 
+.greetings::after {
+  display: inline-block;
+  width: 90%;
+  content: ''; }
+
 .greetings__person {
   font-size: 30px !important;
-  margin: 10px 20px !important;
+  margin: 10px 0px !important;
   text-align: center;
   display: inline-block; }
 
 .greetings__img {
-  display: block;
-  margin: 0.5em auto !important;
-  height: 5em;
-  width: 4.2em; }
+  display: inline-block; }
 
 .reveal p {
   font-weight: 300;
