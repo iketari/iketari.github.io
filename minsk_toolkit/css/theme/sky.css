@@ -148,13 +148,7 @@ body {
   font-family: monospace; }
 
 .reveal pre code {
-  display: block;
   padding: 5px;
-  overflow: auto;
-  max-height: 400px;
-  word-wrap: normal;
-  background: #3F3F3F;
-  color: #DCDCDC;
   margin-bottom: -25px; }
 
 .reveal table {
@@ -335,3 +329,6 @@ body {
 
 .greetings__img {
   display: inline-block; }
+
+.greetings__mail {
+  font-size: 75% !important; }

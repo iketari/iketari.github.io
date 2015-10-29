@@ -178,13 +178,13 @@ body {
 }
 
 .reveal pre code {
-	display: block;
+	// display: block;
 	padding: 5px;
-	overflow: auto;
-	max-height: 400px;
-	word-wrap: normal;
-	background: #3F3F3F;
-	color: #DCDCDC;
+	// overflow: auto;
+	// max-height: 400px;
+	// word-wrap: normal;
+	// background: #3F3F3F;
+	// color: #DCDCDC;
 	margin-bottom: -25px;
 }
 
@@ -428,7 +428,8 @@ body {
 
 .greetings__img {
 	display: inline-block;
-	// margin: 0.5em auto !important;
-	// height: 5em;
-	// width: 4.2em;
+}
+
+.greetings__mail {
+	font-size: 75% !important;
 }
