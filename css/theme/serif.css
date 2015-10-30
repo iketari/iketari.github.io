@@ -7,6 +7,16 @@
 .reveal a {
   line-height: 1.3em; }
 
+.rel {
+  position: relative;
+  height: 90%; }
+
+.abs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0; }
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/

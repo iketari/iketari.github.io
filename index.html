@@ -297,12 +297,21 @@
 					</section>
 					<section>
 						<h3>Нужна фича из версии 0.14.0</h3>
-						<pre class="noborder">
-						<code class="json">
+						<pre class="noborder rel">
+<code class="json abs fragment current-visible">
 //package.json
-...
+
+"jam": {
+	"dependencies": {
+
+
+
+	}
+}
 </code>
-<code class="fragment">
+<code class="json abs fragment current-visible">
+//package.json
+
 "jam": {
 	"dependencies": {
 		"toolkit": "0.14.0",
@@ -311,9 +320,6 @@
 	}
 }
 </code>
-<code class="json">
-...
-						</code>
 						</pre>
 					</section>
 					<section>
@@ -339,19 +345,11 @@ ll data/packages
 					<section>
 						<h3>Выкатываем!</h3>
 						<pre class="noborder">
-						<code class="json">
-//package.json
-...
-</code>
-<code class="fragment">
+<code>
 "dependencies": {
-"toolkit": "git+ssh://git@gitmrg.ru:toolkit.git#mail-36759",
-...
+  "toolkit": "git+ssh://git@gitmrg.ru:toolkit.git#mail-367"
 }
 </code>
-<code class="json">
-...
-						</code>
 						</pre>
 					</section>
 
@@ -605,22 +603,23 @@ drwxrwxr-x 16 a.mezin a.mezin  4096 Сен 29 12:14 ico
 					<section>
 						<h3>Наиболее простой способ</h3>
 						<h4>Изменения осуществялются в рамках библиотеки</h4>
-						<img src="img/simple_workflow.png" class="noborder" alt="">
+						<img src="img/workflows/simple_workflow3.png" class="noborder" alt="">
 					</section>
 					<section>
 						<h3>Немного усложним</h3>
 						<h4>Изменения осуществялются в рамках задачи проекта</h4>
 					</section>
-					<section data-background="img/workflows/project_self.png" data-background-size="100%">
+					<section data-background="img/workflows/project_self2.png" data-background-size="100%">
 					</section>
-					<section data-background="img/workflows/project_pkg.png" data-background-size="100%">
+					<section data-background="img/workflows/project_pkg2.png" data-background-size="100%">
 					</section>
-					<section data-background="img/workflows/project_pkg_publish.png" data-background-size="100%">
+					<section data-background="img/workflows/project_pkg_publish2.png" data-background-size="100%">
 					</section>
-					<section data-background="img/project_workflow.png" data-background-size="100%"></section>
+					<section data-background="img/workflows/project_full.png" data-background-size="100%"></section>
+
 					<section>
 						<h3>Важно согласовать версию и ревизию</h3>
-						<img src="img/project_workflow.png" class="noborder" alt="">
+						<img src="img/workflows/consistent.png" class="noborder" alt="">
 					</section>
 
 					<section>
