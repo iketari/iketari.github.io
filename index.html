@@ -54,7 +54,7 @@
 
 		var lastTS = 0;
 		var NORM_INT = 50;
-		var MIN_VEL = 0.6;
+		var MIN_VEL = 0.01;
 
 		var M = Math;
 
@@ -86,15 +86,21 @@
 			acc.gamma    = event.gamma || 0;
 		};
 
-		window.addEventListener("deviceorientation", throttle(handleOrientation, 500), true);
+		window.addEventListener('deviceorientation', throttle(handleOrientation, 500), true);
 		handleOrientation();
+
+		// Listen for orientation changes
+		addListenerMulti(window, 'orientationchange resize', function() {
+			screenInit();
+			console.log("orientationchange");
+
+		}, false);
 
 		addListenerMulti(canvas, 'mousedown touchstart', function (e) {
 			var cords = pointerEventToXY(e);
 			mouse.d = true
 			mouse.x1 = mouse.x2 = cords.x - canvas.getBoundingClientRect().left
 			mouse.y1 = mouse.y2 = cords.y - canvas.getBoundingClientRect().top
-			console.log(event.type, mouse)
 		});
 
 		addListenerMulti(canvas, 'mousemove touchmove', function (e) {
@@ -107,8 +113,6 @@
 				mouse.x1 = mouse.x2 = cords.x - canvas.getBoundingClientRect().left
 				mouse.y1 = mouse.y2 = cords.y - canvas.getBoundingClientRect().top
 			}
-
-			console.log(event.type, mouse)
 		});
 
 		addListenerMulti(canvas, 'mouseup touchend', function () {
@@ -245,11 +249,6 @@
 			ctx.stroke();
 			ctx.closePath();
 
-			if (~location.hash.indexOf('debug')) {
-				ctx.fillText('acc:' + [acc.alpha, acc.beta, acc.gamma].join(' ,'), 20, 20)
-				ctx.fillText('' + (Math.cos(toRad(acc.gamma)) * sign(acc.gamma)), 20, 40)
-			}
-
 				for (i = 0; i < ball.length; i++) {
 
 					if (ball[i].toDelete) {
@@ -264,9 +263,13 @@
 			requestAnimationFrame(update);
 		}
 
-		function init () {
+		function screenInit() {
 			w = canvas.width = window.innerWidth - padding;
 			h = canvas.height = window.innerHeight - padding;
+		}
+
+		function init () {
+			screenInit();
 
 			ball = [];
 
