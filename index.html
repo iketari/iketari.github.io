@@ -92,8 +92,6 @@
 		// Listen for orientation changes
 		addListenerMulti(window, 'orientationchange resize', function() {
 			screenInit();
-			console.log("orientationchange");
-
 		}, false);
 
 		addListenerMulti(canvas, 'mousedown touchstart', function (e) {
@@ -115,7 +113,7 @@
 			}
 		});
 
-		addListenerMulti(canvas, 'mouseup touchend', function () {
+		addListenerMulti(canvas, 'mouseup touchend', function (e) {
 			if (mouse.d) {
 				mouse.d = false
 
@@ -177,7 +175,7 @@
 			}
 
 			if (M.sqrt(M.pow(ball[i].vy, 2) + M.pow(ball[i].vx, 2) < MIN_VEL)) {
-				ball[i].toDelete = true;
+				// ball[i].toDelete = true;
 				// ball[i].vy = ball[i].vx = 0;
 			}
 
