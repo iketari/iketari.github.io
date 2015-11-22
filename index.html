@@ -54,8 +54,32 @@
 
 		var lastTS = 0;
 		var NORM_INT = 50;
+		var MIN_VEL = 0.6;
 
-		function handleOrientation(event) {
+		var M = Math;
+
+		function addListenerMulti (el, s, fn) {
+			var evts = s.split(' ');
+			for (var i=0, iLen=evts.length; i<iLen; i++) {
+				el.addEventListener(evts[i], fn, false);
+			}
+		}
+
+		function pointerEventToXY (e) {
+			var out = {x:0, y:0};
+			if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel'){
+				var touch = e.touches[0] || e.changedTouches[0];
+				out.x = touch.pageX;
+				out.y = touch.pageY;
+			} else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
+				out.x = e.pageX;
+				out.y = e.pageY;
+			}
+			return out;
+		};
+
+		function handleOrientation (event) {
+			event = event || {};
 			acc.absolute = event.absolute || 0;
 			acc.alpha    = event.alpha || 0;
 			acc.beta     = event.beta || 0;
@@ -63,25 +87,31 @@
 		};
 
 		window.addEventListener("deviceorientation", throttle(handleOrientation, 500), true);
-		handleOrientation({});
+		handleOrientation();
 
-		canvas.addEventListener('mousedown', function (e) {
+		addListenerMulti(canvas, 'mousedown touchstart', function (e) {
+			var cords = pointerEventToXY(e);
 			mouse.d = true
-			mouse.x1 = mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
-			mouse.y1 = mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
+			mouse.x1 = mouse.x2 = cords.x - canvas.getBoundingClientRect().left
+			mouse.y1 = mouse.y2 = cords.y - canvas.getBoundingClientRect().top
+			console.log(event.type, mouse)
 		});
 
-		canvas.addEventListener('mousemove', function (e) {
+		addListenerMulti(canvas, 'mousemove touchmove', function (e) {
+			var cords = pointerEventToXY(e);
+
 			if (mouse.d) {
-				mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
-				mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
+				mouse.x2 = cords.x - canvas.getBoundingClientRect().left
+				mouse.y2 = cords.y - canvas.getBoundingClientRect().top
 			} else {
-				mouse.x1 = mouse.x2 = e.pageX - canvas.getBoundingClientRect().left
-				mouse.y1 = mouse.y2 = e.pageY - canvas.getBoundingClientRect().top
+				mouse.x1 = mouse.x2 = cords.x - canvas.getBoundingClientRect().left
+				mouse.y1 = mouse.y2 = cords.y - canvas.getBoundingClientRect().top
 			}
+
+			console.log(event.type, mouse)
 		});
 
-		canvas.addEventListener('mouseup', function () {
+		addListenerMulti(canvas, 'mouseup touchend', function () {
 			if (mouse.d) {
 				mouse.d = false
 
@@ -97,7 +127,8 @@
 					vx: dx / mag * -(mag * force),
 					vy: dy / mag * -(mag * force),
 					b: 0.7,
-					color: '#'+Math.floor(Math.random()*16777215).toString(16)
+					color: '#'+Math.floor(Math.random()*16777215).toString(16),
+					toDelete: false
 				});
 
 				mouse = {
@@ -140,6 +171,57 @@
 				ball[i].y = ball[i].r
 				ball[i].vy *= -ball[i].b
 			}
+
+			if (M.sqrt(M.pow(ball[i].vy, 2) + M.pow(ball[i].vx, 2) < MIN_VEL)) {
+				ball[i].toDelete = true;
+				// ball[i].vy = ball[i].vx = 0;
+			}
+
+			// Garbage collector
+			if (isNaN(ball[i].x) || isNaN(ball[i].y)) {
+				ball[i].toDelete = true;
+			}
+		}
+
+		function _intersection(i) {
+			for (j = i + 1; j < ball.length; j++) {
+				var dx = ball[i].x - ball[j].x
+				var dy = ball[i].y - ball[j].y
+				var dist = _dist(i, j);
+				if (Math.abs(dx) + Math.abs(dy) != 0 && dist <= ball[i].r + ball[j].r) {
+					var angle = Math.atan2(dy, dx)
+
+					var sp1 = Math.sqrt(ball[i].vx * ball[i].vx + ball[i].vy * ball[i].vy);
+					var sp2 = Math.sqrt(ball[j].vx * ball[j].vx + ball[j].vy * ball[j].vy);
+
+					var dir1 = Math.atan2(ball[i].vy, ball[i].vx);
+					var dir2 = Math.atan2(ball[j].vy, ball[j].vx);
+
+					var vx1 = sp1 * Math.cos(dir1 - angle);
+					var vy1 = sp1 * Math.sin(dir1 - angle);
+					var vx2 = sp2 * Math.cos(dir2 - angle);
+					var vy2 = sp2 * Math.sin(dir2 - angle);
+
+					var fvx1 = ((ball[i].r - ball[j].r) * vx1 + (2 * ball[j].r) * vx2) / (ball[i].r + ball[j].r);
+					var fvx2 = ((2 * ball[i].r) * vx1 + (ball[j].r - ball[i].r) * vx2) / (ball[i].r + ball[j].r);
+					var fvy1 = vy1;
+					var fvy2 = vy2;
+
+					ball[i].vx = Math.cos(angle) * fvx1 + Math.cos(angle + Math.PI / 2) * fvy1;
+					ball[i].vy = Math.sin(angle) * fvx1 + Math.sin(angle + Math.PI / 2) * fvy1;
+					ball[j].vx = Math.cos(angle) * fvx2 + Math.cos(angle + Math.PI / 2) * fvy2;
+					ball[j].vy = Math.sin(angle) * fvx2 + Math.sin(angle + Math.PI / 2) * fvy2;
+
+				}
+			}
+		}
+
+		function _draw(i) {
+			ctx.beginPath()
+			ctx.arc(ball[i].x, ball[i].y, ball[i].r, 0, Math.PI * 2, false)
+			ctx.fillStyle = ball[i].color;
+			ctx.fill()
+			ctx.closePath()
 		}
 
 		function _dist (i, j) {
@@ -164,60 +246,20 @@
 			ctx.closePath();
 
 			if (~location.hash.indexOf('debug')) {
-				ctx.fillText('acc:' + [acc.alpha, acc.beta, acc.gamma]. join(' ,'), 20, 20)
+				ctx.fillText('acc:' + [acc.alpha, acc.beta, acc.gamma].join(' ,'), 20, 20)
 				ctx.fillText('' + (Math.cos(toRad(acc.gamma)) * sign(acc.gamma)), 20, 40)
 			}
 
 				for (i = 0; i < ball.length; i++) {
 
-				_tick(i, timeMuliplier);
-
-				for (j = i + 1; j < ball.length; j++) {
-					var dx = ball[i].x - ball[j].x
-					var dy = ball[i].y - ball[j].y
-					var dist = _dist(i, j);
-					if (Math.abs(dx) + Math.abs(dy) != 0 && dist <= ball[i].r + ball[j].r) {
-						var angle = Math.atan2(dy, dx)
-
-						var sp1 = Math.sqrt(ball[i].vx * ball[i].vx + ball[i].vy * ball[i].vy);
-						var sp2 = Math.sqrt(ball[j].vx * ball[j].vx + ball[j].vy * ball[j].vy);
-
-						var dir1 = Math.atan2(ball[i].vy, ball[i].vx);
-						var dir2 = Math.atan2(ball[j].vy, ball[j].vx);
-
-						var vx1 = sp1 * Math.cos(dir1 - angle);
-						var vy1 = sp1 * Math.sin(dir1 - angle);
-						var vx2 = sp2 * Math.cos(dir2 - angle);
-						var vy2 = sp2 * Math.sin(dir2 - angle);
-
-						var fvx1 = ((ball[i].r - ball[j].r) * vx1 + (2 * ball[j].r) * vx2) / (ball[i].r + ball[j].r);
-						var fvx2 = ((2 * ball[i].r) * vx1 + (ball[j].r - ball[i].r) * vx2) / (ball[i].r + ball[j].r);
-						var fvy1 = vy1;
-						var fvy2 = vy2;
-
-						ball[i].vx = Math.cos(angle) * fvx1 + Math.cos(angle + Math.PI / 2) * fvy1;
-						ball[i].vy = Math.sin(angle) * fvx1 + Math.sin(angle + Math.PI / 2) * fvy1;
-						ball[j].vx = Math.cos(angle) * fvx2 + Math.cos(angle + Math.PI / 2) * fvy2;
-						ball[j].vy = Math.sin(angle) * fvx2 + Math.sin(angle + Math.PI / 2) * fvy2;
-
-						// var attempt = 0;
-						// while (_dist(i, j) < ball[i].r + ball[j].r || attempt > 1000) {
-						// 	_tick(i, 1);
-						// 	_tick(j, 1);
-						// 	attempt += 1;
-						// }
-
+					if (ball[i].toDelete) {
+						ball.splice(i, 1);
+					} else {
+						_tick(i, timeMuliplier);
+						_intersection(i, timeMuliplier);
+						_draw(i);
 					}
 				}
-
-
-
-				ctx.beginPath()
-				ctx.arc(ball[i].x, ball[i].y, ball[i].r, 0, Math.PI * 2, false)
-				ctx.fillStyle = ball[i].color;
-				ctx.fill()
-				ctx.closePath()
-			}
 
 			requestAnimationFrame(update);
 		}
@@ -230,7 +272,6 @@
 
 			var lastTS = Date.now();
 			requestAnimationFrame(update);
-			// setInterval(update, 1000 / 60)
 		}
 
 		init();
