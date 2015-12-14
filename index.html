@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>Canvas - Balls</title>
+<script src="http://localhost:1337/vorlon.js"></script>
 	<style type="text/css">
 		html, body {
 			margin: 0;
@@ -102,6 +103,7 @@
 		});
 
 		addListenerMulti(canvas, 'mousemove touchmove', function (e) {
+			e && e.preventDefault();
 			var cords = pointerEventToXY(e);
 
 			if (mouse.d) {
@@ -151,8 +153,8 @@
 		}
 
 		function _tick (i, timeMuliplier) {
-			ball[i].vy += (gravity * timeMuliplier * (Math.cos(toRad(acc.gamma)) * -1 * sign(acc.gamma)));
-			ball[i].vx += (gravity * timeMuliplier * (Math.cos(toRad(acc.beta)) * sign(acc.beta)));
+			ball[i].vy += (timeMuliplier * (Math.cos(toRad(acc.gamma)) * -1 * sign(acc.gamma)));
+			ball[i].vx += (timeMuliplier * (Math.cos(toRad(acc.beta)) * sign(acc.beta)));
 			// (Math.cos(toRad(acc.gamma)) * sign(acc.gamma))
 			ball[i].x += ball[i].vx;
 			ball[i].y += ball[i].vy;
@@ -172,11 +174,6 @@
 			if (ball[i].y < ball[i].r) {
 				ball[i].y = ball[i].r
 				ball[i].vy *= -ball[i].b
-			}
-
-			if (M.sqrt(M.pow(ball[i].vy, 2) + M.pow(ball[i].vx, 2) < MIN_VEL)) {
-				// ball[i].toDelete = true;
-				// ball[i].vy = ball[i].vx = 0;
 			}
 
 			// Garbage collector
