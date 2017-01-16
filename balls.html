@@ -88,8 +88,8 @@
 			acc.gamma    = event.gamma || 0;
 		};
 
-		window.addEventListener('deviceorientation', throttle(handleOrientation, 500), true);
-		handleOrientation();
+		// window.addEventListener('deviceorientation', throttle(handleOrientation, 500), true);
+		// handleOrientation();
 
 		// Listen for orientation changes
 		addListenerMulti(window, 'orientationchange resize', function() {
